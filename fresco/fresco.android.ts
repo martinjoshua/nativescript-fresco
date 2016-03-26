@@ -18,26 +18,26 @@ export class FrescoDrawee extends commonModule.FrescoDrawee {
         return this._android;
     }
 
-    protected onImageUriChanged(args) {
+    protected onSrcChanged(args) {
         this.initImage();
     }
 
     private initImage() {
         if (this._android) {
             this._android.setImageURI(null, null);
-            if (this.imageUri) {
-                if (!utils.isFileOrResourcePath(this.imageUri)) {
-                    this._android.setImageURI(android.net.Uri.parse(this.imageUri), null);
+            if (this.src) {
+                if (!utils.isFileOrResourcePath(this.src)) {
+                    this._android.setImageURI(android.net.Uri.parse(this.src), null);
                 }
                 else {
                     var res = utils.ad.getApplicationContext().getResources();
                     if (!res) {
                         return;
                     }
-                    if (!utils.isFileOrResourcePath(this.imageUri)) {
+                    if (!utils.isFileOrResourcePath(this.src)) {
                         throw new Error("Path \"" + "\" is not a valid file or resource.");
                     }
-                    var path = this.imageUri;
+                    var path = this.src;
                     if (path.indexOf(utils.RESOURCE_PREFIX) === 0) {
                         var resName = path.substr(utils.RESOURCE_PREFIX.length);
                         var identifier = res.getIdentifier(resName, 'drawable', utils.ad.getApplication().getPackageName());
@@ -48,6 +48,8 @@ export class FrescoDrawee extends commonModule.FrescoDrawee {
                                 .build();
                             this._android.setImageURI(uri);
                         }
+                    } else {
+                        this._android.setImageURI(android.net.Uri.parse((path.indexOf('file://') === 0 ? '' : 'file://') + path));
                     }
                 }
             }

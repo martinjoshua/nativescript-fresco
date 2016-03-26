@@ -4,28 +4,28 @@ import proxyModule = require("ui/core/proxy");
 
 export class FrescoDrawee extends viewModule.View {
 
-    private static imageUriProperty = new dependencyObservable.Property(
-        "imageUri",
+    private static srcProperty = new dependencyObservable.Property(
+        "src",
         "FrescoDrawee",
         new proxyModule.PropertyMetadata(
             undefined,
             dependencyObservable.PropertyMetadataSettings.None,
-            FrescoDrawee.onImageUriPropertyChanged));
+            FrescoDrawee.onSrcPropertyChanged));
 
-    get imageUri(): string{
-        return this._getValue(FrescoDrawee.imageUriProperty);
+    get src(): string{
+        return this._getValue(FrescoDrawee.srcProperty);
     }
 
-    set imageUri(value: string){
-        this._setValue(FrescoDrawee.imageUriProperty, value);
+    set src(value: string){
+        this._setValue(FrescoDrawee.srcProperty, value);
     }
 
-    private static onImageUriPropertyChanged(args){
-               var drawee = args.object;
-        drawee.onImageUriChanged(args);
+    private static onSrcPropertyChanged(args){
+        var drawee = args.object;
+        drawee.onSrcChanged(args);
     }
 
-    protected onImageUriChanged(args){
+    protected onSrcChanged(args){
 
     }
 }
